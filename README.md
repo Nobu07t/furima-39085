@@ -17,7 +17,7 @@
 ### Association
 
 * has_many :buys
-* has_one :items
+* has_many :items
 
 
 ## items table
@@ -38,7 +38,7 @@
 ### Association
 
 * belongs_to :user
-* belongs_to :buy
+* has_one :buy
 
 
 ## buys table
@@ -52,7 +52,7 @@
 ### Association
 
 * belongs_to :user
-* has_one :shipping_informs
+* has_one :shipping_inform
 * belongs_to :item
 
 
