@@ -26,7 +26,7 @@
 |------------------------|---------------------|--------------------------------|
 | name                   | string              | null: false                    |
 | info                   | text                | null: false                    |
-| price_id               | integer             | null: false                    |
+| price                  | integer             | null: false                    |
 | category_id            | integer             | null: false                    |
 | sales_status_id        | integer             | null: false                    |
 | shipping_fee_status_id | integer             | null: false                    |
@@ -37,7 +37,8 @@
 
 ### Association
 
-* belongs_to :users
+* belongs_to :user
+* belongs_to :buy
 
 
 ## buys table
@@ -51,10 +52,11 @@
 ### Association
 
 * belongs_to :user
-* has_one :shipping informs
+* has_one :shipping_informs
+* belongs_to :item
 
 
-## shipping informs table
+## shipping_informs table
 
 | Column             | Type                | Options                        |
 |--------------------|---------------------|--------------------------------|
