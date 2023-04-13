@@ -8,7 +8,7 @@ class Item < ApplicationRecord
   belongs_to :sales_status
   belongs_to :shipping_fee_status
   belongs_to :prefecture
-  belongs_to :Scheduled_delivery
+  belongs_to :scheduled_delivery
 
 #  商品画像を1枚つけることが必須であること
   validates :image, presence: true
