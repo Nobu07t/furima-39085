@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :contributor_confirmation, only: [:edit, :update]
-  before_action :set_tweet, only: [:edit, :show, :update]
+  before_action :contributor_confirmation, only: [:edit, :update, :destroy]
+  before_action :set_tweet, only: [:edit, :show, :update, :destroy]
 
 def index
   @items = Item.all.order(created_at: :desc)
@@ -34,6 +34,14 @@ def update
   end
 end
 
+def destroy
+  if @item.destroy
+    redirect_to root_path
+    else
+    redirect_to root_path
+    end
+end
+
 private
   def item_params
     params.require(:item).permit(:name, :image, :info, :price, :category_id, :sales_status_id, :shipping_fee_status_id, :prefecture_id, :scheduled_delivery_id).merge(user_id: current_user.id)
@@ -43,8 +51,8 @@ private
     @item = Item.find(params[:id])
     redirect_to root_path unless current_user == @item.user
   end
-end
 
-def set_tweet
-  @item = Item.find(params[:id])
+  def set_tweet
+    @item = Item.find(params[:id])
+  end
 end
