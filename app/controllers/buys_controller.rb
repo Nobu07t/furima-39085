@@ -1,6 +1,7 @@
 class BuysController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!
   before_action :set_tweet, only: [:index, :create]
+  before_action :contributor_confirmation, only: [:index]
 
   def index
     @buy_shipping_inform = BuyShippingInform.new
@@ -35,4 +36,9 @@ class BuysController < ApplicationController
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
   end
+
+  def contributor_confirmation
+    redirect_to root_path if @item.buy.present?
+  end
+
 end

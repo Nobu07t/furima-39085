@@ -50,6 +50,7 @@ private
   def contributor_confirmation
     @item = Item.find(params[:id])
     redirect_to root_path unless current_user == @item.user
+    redirect_to root_path if @item.buy.present?
   end
 
   def set_tweet
