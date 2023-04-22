@@ -39,6 +39,7 @@ class BuysController < ApplicationController
 
   def contributor_confirmation
     redirect_to root_path if @item.buy.present?
+    redirect_to root_path if current_user == @item.user
   end
 
 end

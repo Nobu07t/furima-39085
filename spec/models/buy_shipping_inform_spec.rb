@@ -18,6 +18,11 @@ RSpec.describe BuyShippingInform, type: :model do
 
    context '内容に問題がある場合' do
 
+    it '建物名が空でも登録できる' do
+      @buy_shipping_inform.building = nil
+      expect(@buy_shipping_inform).to be_valid
+    end
+
     it '郵便番号が空では登録できない' do
       @buy_shipping_inform.postal_code = nil
       @buy_shipping_inform.valid?
@@ -54,8 +59,14 @@ RSpec.describe BuyShippingInform, type: :model do
       expect(@buy_shipping_inform.errors.full_messages).to include "Postal code is invalid. Include hyphen(-)"
     end
 
-    it ' 電話番号は、10桁以上11桁以内の半角数値でなければ登録できない' do
-      @buy_shipping_inform.phone_number = "090-1234-5678"
+    it '電話番号が9桁以下では購入できない' do
+      @buy_shipping_inform.phone_number = "123456789"
+      @buy_shipping_inform.valid?
+      expect(@buy_shipping_inform.errors.full_messages).to include "Phone number is invalid"
+    end
+
+    it '電話番号が12桁以上では購入できない' do
+      @buy_shipping_inform.phone_number = "123456789123"
       @buy_shipping_inform.valid?
       expect(@buy_shipping_inform.errors.full_messages).to include "Phone number is invalid"
     end
@@ -64,6 +75,18 @@ RSpec.describe BuyShippingInform, type: :model do
       @buy_shipping_inform.token = nil
       @buy_shipping_inform.valid?
       expect(@buy_shipping_inform.errors.full_messages).to include("Token can't be blank")
+    end
+
+    it "userが紐付いていなければ購入できない" do
+      @buy_shipping_inform.user_id = nil
+      @buy_shipping_inform.valid?
+      expect(@buy_shipping_inform.errors.full_messages).to include("User can't be blank")
+    end
+
+    it "itemが紐付いていなければ購入できない" do
+      @buy_shipping_inform.item_id = nil
+      @buy_shipping_inform.valid?
+      expect(@buy_shipping_inform.errors.full_messages).to include("Item can't be blank")
     end
    end
   end

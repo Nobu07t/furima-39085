@@ -22,21 +22,12 @@
       </span>
     </div>
     
-    <% if @item.buy.present? %>
-    <% else %>
-    <% if user_signed_in? && current_user.id == @item.user_id %>
+    <% if user_signed_in? && current_user.id == @item.user_id && @item.buy.blank? %>
     <%= link_to "商品の編集", edit_item_path, method: :get, class: "item-red-btn" %>
     <p class="or-text">or</p>
     <%= link_to "削除", item_path, method: :delete, class:"item-destroy" %>
-    <% end %>
-    <% end %>
-    
-    <% if user_signed_in? && current_user.id == @item.user_id %>
-    <% else %>
-    <% if @item.buy.present? %>
-    <% else %>
-    <%= link_to "購入画面に進む", item_buys_path(@item.id) ,class:"item-red-btn"%>
-    <% end %>
+    <% elsif @item.buy.blank? %>
+    <%= link_to "購入画面に進む", item_buys_path(@item), class:"item-red-btn" %>
     <% end %>
     
     <div class="item-explain-box">
