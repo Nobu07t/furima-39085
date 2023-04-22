@@ -9,20 +9,19 @@ RSpec.describe BuyShippingInform, type: :model do
   end
 
   describe '購入記録の保存' do
-    
+
    context '内容に問題がない場合' do
     it 'すべての情報があれば登録できる' do
       expect(@buy_shipping_inform).to be_valid
     end
-   end
-
-   context '内容に問題がある場合' do
 
     it '建物名が空でも登録できる' do
       @buy_shipping_inform.building = nil
       expect(@buy_shipping_inform).to be_valid
     end
+   end
 
+   context '内容に問題がある場合' do
     it '郵便番号が空では登録できない' do
       @buy_shipping_inform.postal_code = nil
       @buy_shipping_inform.valid?
@@ -67,6 +66,12 @@ RSpec.describe BuyShippingInform, type: :model do
 
     it '電話番号が12桁以上では購入できない' do
       @buy_shipping_inform.phone_number = "123456789123"
+      @buy_shipping_inform.valid?
+      expect(@buy_shipping_inform.errors.full_messages).to include "Phone number is invalid"
+    end
+
+    it '電話番号は半角数字でなければ保存できない' do
+      @buy_shipping_inform.phone_number = "０９０１２３４５６７８"
       @buy_shipping_inform.valid?
       expect(@buy_shipping_inform.errors.full_messages).to include "Phone number is invalid"
     end
