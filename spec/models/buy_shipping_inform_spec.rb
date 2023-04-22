@@ -9,7 +9,7 @@ RSpec.describe BuyShippingInform, type: :model do
   end
 
   describe '購入記録の保存' do
-
+    
    context '内容に問題がない場合' do
     it 'すべての情報があれば登録できる' do
       expect(@buy_shipping_inform).to be_valid
